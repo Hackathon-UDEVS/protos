@@ -1,0 +1,17 @@
+syntax="proto3";
+
+option go_package = "internal/genproto/user-service";
+
+package userservice;
+
+service UserService{
+  rpc Test1(Test1Req) returns (Test1Res);
+}
+
+message Test1Req{
+  string meassage = 1;
+}
+
+message Test1Res{
+  string meassage = 1;
+}

@@ -1,0 +1,17 @@
+syntax="proto3";
+
+option go_package = "internal/genproto/second-service";
+
+package secondservice;
+
+service SecondService{
+  rpc Test2(Test2Req) returns (Test2Res);
+}
+
+message Test2Req{
+  string meassage = 1;
+}
+
+message Test2Res{
+  string meassage = 1;
+}

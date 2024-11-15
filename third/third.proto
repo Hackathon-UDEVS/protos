@@ -1,0 +1,17 @@
+syntax="proto3";
+
+option go_package = "internal/genproto/third-service";
+
+package thirdservice;
+
+service ThirdService{
+  rpc Test3(Test3Req) returns (Test3Res);
+}
+
+message Test3Req{
+  string meassage = 1;
+}
+
+message Test3Res{
+  string meassage = 1;
+}

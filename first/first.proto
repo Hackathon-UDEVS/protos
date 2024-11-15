@@ -1,6 +1,6 @@
 syntax="proto3";
 
-option go_package = "internal/genproto/second-service";
+option go_package = "internal/genproto/first-service";
 
 package firstservice;
 

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto/auth";
+
+package bid;
+
+service BidService {
+  rpc SubmitBid(SubmitBidRequest) returns (BidResponse);
+  rpc GetBidsForTender(GetBidsRequest) returns (BidsListResponse);
+}
+
+message SubmitBidRequest {
+  string tender_id = 1;
+  string contractor_id = 2;
+  double price = 3;
+  string delivery_time = 4;  // e.g., "2 weeks"
+  string comments = 5;
+}
+
+message GetBidsRequest {
+  string tender_id = 1;
+}
+
+message BidResponse {
+  string message = 1;
+}
+
+message BidsListResponse {
+  repeated Bid bids = 1;
+}
+
+message Bid {
+  string id = 1;
+  string tender_id = 2;
+  string contractor_id = 3;
+  double price = 4;
+  string delivery_time = 5;
+  string comments = 6;
+  string status = 7;  // e.g., "submitted", "accepted", "rejected"
+}

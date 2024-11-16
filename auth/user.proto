@@ -5,28 +5,70 @@ option go_package="internal/genproto/auth";
 package auth;
 
 service AuthService {
-  rpc Register(RegisterReq) returns (RegisterRes);
+  rpc RegisterUser(RegisterUserReq) returns (RegisterUserRes);
+  rpc VerifyUser(VerifyUserReq) returns (VerifyUserRes);
   rpc Login(LoginReq) returns (LoginRes);
+  rpc GetUserByID(GetUserByIDReq) returns (GetUserByIDRes);
+  rpc GetAllUsers(GetAllUserReq) returns (GetAllUserRes);
+  rpc UpdateUser(UpdateUserReq) returns (UpdateUserRes);
 }
 
-message RegisterReq {
-  string username = 1;
+message RegisterUserReq {
+  string email = 1;
   string password = 2;
-  string email = 3;
+  string role = 3;  // Must be either 'client' or 'contractors'
 }
 
-message RegisterRes{
-  string meassage = 1;
+message RegisterUserRes {
+  string message = 1;
+}
+
+message VerifyUserReq {
+  string sms_code = 1;
+}
+
+message VerifyUserRes {
+  UserModel res = 1;
 }
 
 message LoginReq {
-  string username = 1;
+  string email = 1;
   string password = 2;
 }
 
-message LoginRes{
-  string username = 1;
+message LoginRes {
+  UserModel user_res = 1;
+}
+
+message GetUserByIDReq {
+  int64 userid = 1;
+}
+
+message GetUserByIDRes {
+  UserModel user_res = 1;
+}
+
+message GetAllUserReq {
+  UserModel user_req = 1;
+}
+
+message GetAllUserRes {
+  repeated UserModel user_res = 1;
+}
+
+message UpdateUserReq {
+  UserModel user_req = 1;
+}
+
+message UpdateUserRes {
+  UserModel user_res = 1;
+}
+
+// Shared user model
+message UserModel {
+  string id = 1;
   string email = 2;
-  string created_at = 3;
-  string updated_at = 4;
+  string role = 3;
+  string created_at = 4;
+  string updated_at = 5;
 }

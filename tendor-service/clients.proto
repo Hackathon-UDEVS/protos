@@ -1,5 +1,7 @@
 syntax = "proto3";
-option go_package="internal/genproto/tender";
+
+option go_package = "internal/genproto/tender-service";
+
 package tender;
 
 service ClientService {
@@ -8,6 +10,7 @@ service ClientService {
   rpc GetAllTenders(GetAllTendersReq) returns (TendersList); // Mavjud hamma tenderlarni olib beradi
   rpc UpdateTenderStatus(UpdateTenderStatusReq) returns (ResponseMessage); // Tenderni update qilish
   rpc DeleteTender(DeleteTenderReq) returns (ResponseMessage); // Tenderni delete qilish
+  rpc SelectWinnerBid(SelectWinnerReq) returns (ResponseMessage); // Selects the winner
 }
 
 message CreateTenderReq {
@@ -25,10 +28,7 @@ message ResponseMessage {
 
 message GetMyTendersReq {
   string client_id = 1;
-  int64 budget = 2;
-  string deadline = 3;
-  bool order = 4; // Tartibi: qimmatdan arzonga yoki arzondan qimmatgacha
-  bool best = 5; // Eng yaxshilarini saralab chiqarib beradi agar true bo'lsa qoganlari hisoblanmaydi
+  string status = 2;
 }
 
 message TendersList {
@@ -36,10 +36,7 @@ message TendersList {
 }
 
 message GetAllTendersReq{
-  int64 budget = 1;
-  string deadline = 2;
-  bool order = 4; // Tartibi: qimmatdan arzonga yoki arzondan qimmatgacha
-  bool best = 5; // Eng yaxshilarini tanlag beradi agar true bo'sa qoganlari hisoblanmaydi
+  string status = 1;
 }
 
 message UpdateTenderStatusReq {
@@ -62,4 +59,10 @@ message Tender {
   double budget = 6;
   string status = 7;
   string attachment = 8;
+}
+
+message SelectWinnerReq{
+  string client_id = 1;
+  string tender_id = 2;
+  string contractor_id = 3;
 }

@@ -1,12 +1,22 @@
 syntax = "proto3";
 
-option go_package = "internal/genproto/tender";
+option go_package = "internal/genproto/tender-service";
 
 package tender;
 
-service BidService {
+service ContractorService {
   rpc SubmitBid(SubmitBidRequest) returns (BidResponse); // Taklif (offer yaratish)
   rpc GetBidsForTender(GetBidsRequest) returns (BidsListResponse); // Tender uchun yuborilgan takliflarni (bid) ko'rish
+  rpc GetMyBids(GetMyBidsRequest) returns (BidsListResponse); // This retrievs all all the Bids that i offer
+}
+
+message GetMyBidsRequest{
+  string contractor_id = 1;
+  string tender_id = 2;
+  int64 budget = 3; // This is offered price that we offer
+  string deadline = 4; // This is deadline for the tender in days (minimum)
+  bool order = 5; // Tartibi: qimmatdan arzonga yoki arzondan qimmatgacha
+  string status = 6;
 }
 
 message SubmitBidRequest {
@@ -19,10 +29,11 @@ message SubmitBidRequest {
 
 message GetBidsRequest {
   string tender_id = 1;
-  int64 budget = 2;
-  string deadline = 3;
+  int64 budget = 2; // This is offered price that contractor offer
+  string deadline = 3; // This is deadline for the tender in days (minimum)
   bool order = 4; // Tartibi: qimmatdan arzonga yoki arzondan qimmatgacha
   bool best = 5; // Eng yaxshilarini saralab chiqarib beradi agar true bo'lsa qoganlari hisoblanmaydi
+  string status = 6;
 }
 
 message BidResponse {
